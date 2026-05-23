@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Location - Edumos</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+    <!-- TOP LEFT -->
+<div class="top-left-bar">
+    <div class="current-page" id="currentPage">Home</div>
+    <button class="theme-toggle-btn" id="themeBtn">🎨</button>
+</div>
+
+<!-- THEME PANEL -->
+<div class="theme-panel" id="themePanel">
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Mode</p>
+        <div class="theme-mode-row">
+            <button class="theme-mode-btn" id="lightBtn">☀️ Light</button>
+            <button class="theme-mode-btn" id="darkBtn">🌙 Dark</button>
+        </div>
+    </div>
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Gradient</p>
+        <div class="theme-gradient-row">
+            <button class="theme-grad-btn" data-grad="default" title="Default" style="background:linear-gradient(135deg,#ffffff,#4b5cff);"></button>
+            <button class="theme-grad-btn" data-grad="purple" title="Purple Dream" style="background:linear-gradient(135deg,#f3e7ff,#9b59b6);"></button>
+            <button class="theme-grad-btn" data-grad="ocean" title="Ocean" style="background:linear-gradient(135deg,#e0f7fa,#0077b6);"></button>
+            <button class="theme-grad-btn" data-grad="forest" title="Forest" style="background:linear-gradient(135deg,#e8f5e9,#2ecc71);"></button>
+            <button class="theme-grad-btn" data-grad="sunset" title="Sunset" style="background:linear-gradient(135deg,#fff3e0,#e74c3c);"></button>
+        </div>
+    </div>
+</div>
+
+<!-- TOP RIGHT -->
+<div class="top-right-bar">
+    <button class="search-icon-btn" id="searchBtn">🔍</button>
+    <div class="menu-icon" id="menuBtn">☰</div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar-wrap" id="searchBarWrap">
+    <div class="search-bar-top">
+        <input type="text" id="searchInput" class="search-bar-input" placeholder="Search pages, subjects..." />
+        <button class="search-bar-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results-drop" id="searchResults" style="display:none;"></div>
+</div>
+
+<!-- OVERLAY + SIDE MENU -->
+<div class="overlay" id="overlay"></div>
+<div class="side-menu" id="sideMenu">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../pages/about.html" class="nav-link">About</a>
+    <a href="../pages/faqs.html" class="nav-link">FAQs</a>
+    <a href="../pages/contact.html" class="nav-link">Contact</a>
+</div>
+
+    <div class="auth-container">
+        <div class="auth-card setup-card">
+
+            <div class="setup-step-indicator">
+                <div class="setup-step active">1</div>
+                <div class="setup-step-line" id="line1"></div>
+                <div class="setup-step" id="step2">2</div>
+            </div>
+
+            <h2 class="auth-title">Where are you <span id="roleWord">learning</span>?</h2>
+            <p class="auth-role">Select your Dzongkhag and school</p>
+
+            <div class="auth-form">
+
+                <div class="form-group">
+                    <label>Dzongkhag</label>
+                    <select id="dzongkhagSelect" class="setup-select">
+                        <option value="">— Select Dzongkhag —</option>
+                        <option>Bumthang</option>
+                        <option>Chhukha</option>
+                        <option>Dagana</option>
+                        <option>Gasa</option>
+                        <option>Haa</option>
+                        <option>Lhuentse</option>
+                        <option>Mongar</option>
+                        <option>Paro</option>
+                        <option>Pemagatshel</option>
+                        <option>Punakha</option>
+                        <option>Samdrup Jongkhar</option>
+                        <option>Samtse</option>
+                        <option>Sarpang</option>
+                        <option>Thimphu</option>
+                        <option>Trashigang</option>
+                        <option>Trashi Yangtse</option>
+                        <option>Trongsa</option>
+                        <option>Tsirang</option>
+                        <option>Wangdue Phodrang</option>
+                        <option>Zhemgang</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="schoolGroup" style="display:none;">
+                    <label>School</label>
+                    <select id="schoolSelect" class="setup-select">
+                        <option value="">— Select School —</option>
+                    </select>
+                </div>
+
+                <button class="auth-btn" id="nextBtn" style="display:none;">Next</button>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js" defer></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const role = params.get("role") || sessionStorage.getItem("userRole") || "learner";
+        const isTeacher = role === "teacher";
+        sessionStorage.setItem("userRole", role);
+
+        document.getElementById("roleWord").textContent = isTeacher ? "teaching" : "learning";
+
+        // Hide step 2 for teacher since they go straight to dashboard
+        if (isTeacher) {
+            document.getElementById("step2").style.display = "none";
+            document.getElementById("line1").style.display = "none";
+        }
+
+        const schools = {
+            "Bumthang": ["Jakar HSS", "Chumey LSS", "Ura LSS", "Tang LSS"],
+            "Chhukha": ["Phuentsholing HSS", "Kharbandi HSS", "Chapcha LSS", "Bongo LSS", "Dungna LSS", "Bjithang MSS"],
+            "Dagana": ["Dagana HSS", "Lhamoizingkha LSS", "Tashiding LSS"],
+            "Gasa": ["Gasa LSS", "Laya LSS"],
+            "Haa": ["Haa HSS", "Sombaykha LSS", "Bji LSS"],
+            "Lhuentse": ["Lhuentse HSS", "Khoma LSS", "Gangtey LSS"],
+            "Mongar": ["Mongar HSS", "Drametse LSS", "Ngatshang LSS", "Silambi LSS"],
+            "Paro": ["Paro HSS", "Drugyel HSS", "Bondey LSS", "Shaba LSS", "Naja LSS"],
+            "Pemagatshel": ["Pemagatshel HSS", "Nganglam HSS", "Zobel LSS"],
+            "Punakha": ["Punakha HSS", "Toedwang LSS", "Shengana LSS"],
+            "Samdrup Jongkhar": ["Samdrup Jongkhar HSS", "Dewathang HSS", "Pemathang LSS"],
+            "Samtse": ["Samtse HSS", "Tendu HSS", "Tashicholing LSS", "Denchukha LSS"],
+            "Sarpang": ["Sarpang HSS", "Gelephu HSS", "Sershong LSS", "Dekiling LSS"],
+            "Thimphu": ["Motithang HSS", "Changangkha MSS", "Druk School", "Lungtenzampa MSS", "Babesa MSS", "Chang LSS"],
+            "Trashigang": ["Trashigang HSS", "Rangjung HSS", "Bidung LSS", "Phongmey LSS", "Bartsham LSS"],
+            "Trashi Yangtse": ["Trashi Yangtse HSS", "Ramjar LSS", "Bumdeling LSS"],
+            "Trongsa": ["Trongsa HSS", "Nubi LSS", "Langthil LSS"],
+            "Tsirang": ["Tsirang HSS", "Tsholingkhar LSS", "Patshaling LSS"],
+            "Wangdue Phodrang": ["Wangdue HSS", "Bajo HSS", "Rukha LSS", "Nahi LSS", "Athang LSS"],
+            "Zhemgang": ["Zhemgang HSS", "Panbang LSS", "Shingkhar LSS"]
+        };
+
+        const dzongkhagSelect = document.getElementById("dzongkhagSelect");
+        const schoolSelect    = document.getElementById("schoolSelect");
+        const schoolGroup     = document.getElementById("schoolGroup");
+        const nextBtn         = document.getElementById("nextBtn");
+
+        dzongkhagSelect.addEventListener("change", () => {
+            const dz = dzongkhagSelect.value;
+            schoolSelect.innerHTML = '<option value="">— Select School —</option>';
+            schoolGroup.style.display = "none";
+            nextBtn.style.display = "none";
+
+            if (dz && schools[dz]) {
+                schools[dz].forEach(s => {
+                    const opt = document.createElement("option");
+                    opt.textContent = s;
+                    schoolSelect.appendChild(opt);
+                });
+                schoolGroup.style.display = "block";
+            }
+        });
+
+        schoolSelect.addEventListener("change", () => {
+            nextBtn.style.display = schoolSelect.value ? "block" : "none";
+        });
+
+        nextBtn.addEventListener("click", () => {
+            const dz     = dzongkhagSelect.value;
+            const school = schoolSelect.value;
+            if (!dz || !school) { alert("Please select both."); return; }
+
+            sessionStorage.setItem("dzongkhag", dz);
+            sessionStorage.setItem("school", school);
+
+            // Teacher goes straight to dashboard, student goes to grade
+            if (isTeacher) {
+                window.location.href = "../dashboards/teacher.html";
+            } else {
+                window.location.href = `grade.html?role=${role}`;
+            }
+        });
+    </script>
+</body>
+</html>

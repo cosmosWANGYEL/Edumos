@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edumos - Welcome</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+
+    <!-- TOP LEFT -->
+<div class="top-left-bar">
+    <div class="current-page" id="currentPage">Home</div>
+    <button class="theme-toggle-btn" id="themeBtn">🎨</button>
+</div>
+
+<!-- THEME PANEL -->
+<div class="theme-panel" id="themePanel">
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Mode</p>
+        <div class="theme-mode-row">
+            <button class="theme-mode-btn" id="lightBtn">☀️ Light</button>
+            <button class="theme-mode-btn" id="darkBtn">🌙 Dark</button>
+        </div>
+    </div>
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Gradient</p>
+        <div class="theme-gradient-row">
+            <button class="theme-grad-btn" data-grad="default" title="Default" style="background:linear-gradient(135deg,#ffffff,#4b5cff);"></button>
+            <button class="theme-grad-btn" data-grad="purple" title="Purple Dream" style="background:linear-gradient(135deg,#f3e7ff,#9b59b6);"></button>
+            <button class="theme-grad-btn" data-grad="ocean" title="Ocean" style="background:linear-gradient(135deg,#e0f7fa,#0077b6);"></button>
+            <button class="theme-grad-btn" data-grad="forest" title="Forest" style="background:linear-gradient(135deg,#e8f5e9,#2ecc71);"></button>
+            <button class="theme-grad-btn" data-grad="sunset" title="Sunset" style="background:linear-gradient(135deg,#fff3e0,#e74c3c);"></button>
+        </div>
+    </div>
+</div>
+
+<!-- TOP RIGHT -->
+<div class="top-right-bar">
+    <button class="search-icon-btn" id="searchBtn">🔍</button>
+    <div class="menu-icon" id="menuBtn">☰</div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar-wrap" id="searchBarWrap">
+    <div class="search-bar-top">
+        <input type="text" id="searchInput" class="search-bar-input" placeholder="Search pages, subjects..." />
+        <button class="search-bar-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results-drop" id="searchResults" style="display:none;"></div>
+</div>
+
+<!-- OVERLAY + SIDE MENU -->
+<div class="overlay" id="overlay"></div>
+<div class="side-menu" id="sideMenu">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="pages/about.html" class="nav-link">About</a>
+    <a href="pages/faqs.html" class="nav-link">FAQs</a>
+    <a href="pages/contact.html" class="nav-link">Contact</a>
+</div>
+
+<!-- INTRO SECTION -->
+<div class="intro-container">
+
+    <!-- FLOATING SHAPES -->
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+
+    <div class="logo">
+        <span id="logo-text"></span>
+    </div>
+
+    <p class="intro-desc">
+        A smart learning platform for students and teachers.<br>
+        Learn. Teach. Grow.
+    </p>
+
+    <a href="intro.html" class="get-started-btn pulse-btn">
+        Get Started
+    </a>
+
+</div>
+
+<!-- DIVIDER -->
+<div class="section-divider"></div>
+
+<!-- INFO SECTION -->
+<div class="info-section-title">
+    <h2>What We Offer</h2>
+</div>
+
+<section class="info-section">
+
+    <div class="info-box scroll-animate">
+        <div class="info-icon">👁</div>
+        <h2>Vision</h2>
+        <p class="info-box-text">We envision a Bhutan where geography and connectivity are never barriers to learning. Every student — from Thimphu to the most remote village in Zhemgang — deserves access to quality education, and Edumos exists to make that a reality.</p>
+    </div>
+
+    <div class="info-box scroll-animate">
+        <div class="info-icon">🎯</div>
+        <h2>Mission</h2>
+        <p class="info-box-text">Our mission is to empower teachers and students across all 20 Dzongkhags with tools that work offline, sync automatically when online, and adapt to the real-world challenges of education in Bhutan. We build technology that serves people, not the other way around.</p>
+    </div>
+
+    <div class="info-box scroll-animate">
+        <div class="info-icon">⚡</div>
+        <h2>Features</h2>
+        <div class="info-feature-list">
+            <div class="info-feature-item">
+                <span class="info-feature-dot"></span>
+                <span>Fully offline learning system — works without any internet connection</span>
+            </div>
+            <div class="info-feature-item">
+                <span class="info-feature-dot"></span>
+                <span>Teacher-to-student local sharing over Wi-Fi hotspot</span>
+            </div>
+            <div class="info-feature-item">
+                <span class="info-feature-dot"></span>
+                <span>PIN-protected subject modules for secure access</span>
+            </div>
+            <div class="info-feature-item">
+                <span class="info-feature-dot"></span>
+                <span>Quizzes, progress tracking, and performance reports</span>
+            </div>
+            <div class="info-feature-item">
+                <span class="info-feature-dot"></span>
+                <span>Automatic sync when internet is restored</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-box scroll-animate">
+        <div class="info-icon">💡</div>
+        <h2>Why It Matters</h2>
+        <p class="info-box-text">Bhutan's mountainous terrain means that many schools operate in areas where internet access is unreliable or simply unavailable. Students in these areas are falling behind not because of lack of effort, but because of lack of access. Edumos directly solves this problem by bringing education to the device, not depending on the cloud.</p>
+    </div>
+
+</section>
+
+<!-- STATISTICS SECTION -->
+<section class="stats-section">
+    <div class="stat-counter scroll-animate">
+        <p class="counter" data-target="500">0</p>
+        <p class="counter-label">Students</p>
+    </div>
+    <div class="stat-counter scroll-animate">
+        <p class="counter" data-target="50">0</p>
+        <p class="counter-label">Teachers</p>
+    </div>
+    <div class="stat-counter scroll-animate">
+        <p class="counter" data-target="100">0</p>
+        <p class="counter-label">Lessons</p>
+    </div>
+    <div class="stat-counter scroll-animate">
+        <p class="counter" data-target="12">0</p>
+        <p class="counter-label">Schools Reached</p>
+    </div>
+</section>
+
+<!-- HOW IT WORKS SECTION -->
+<section class="how-section">
+    <div class="info-section-title">
+        <h2>How It Works</h2>
+    </div>
+    <div class="how-steps">
+        <div class="how-step scroll-animate">
+            <div class="how-icon">📥</div>
+            <div class="how-number">01</div>
+            <h3>Download Content</h3>
+            <p>Teacher downloads lessons, notes, and quizzes when internet is available.</p>
+        </div>
+        <div class="how-arrow">→</div>
+        <div class="how-step scroll-animate">
+            <div class="how-icon">📡</div>
+            <div class="how-number">02</div>
+            <h3>Share Locally</h3>
+            <p>Content is shared with students over a local Wi-Fi hotspot — no internet needed.</p>
+        </div>
+        <div class="how-arrow">→</div>
+        <div class="how-step scroll-animate">
+            <div class="how-icon">📊</div>
+            <div class="how-number">03</div>
+            <h3>Sync Progress</h3>
+            <p>Student progress and quiz results automatically sync once back online.</p>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="testimonials-section">
+    <div class="info-section-title">
+        <h2>What People Say</h2>
+    </div>
+    <div class="testimonials-carousel">
+        <div class="testimonial-track" id="testimonialTrack">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Edumos helped me study even without WiFi. I never miss a lesson now!"</p>
+                <p class="testimonial-author">— Sonam Choden, Student</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Sharing lessons with my students over hotspot is so easy. This platform is a game changer."</p>
+                <p class="testimonial-author">— Tenzin Wangchuk, Teacher</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"My quiz scores improved a lot because I can practice anytime, anywhere."</p>
+                <p class="testimonial-author">— Pema Dorji, Student</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Finally a platform that understands the challenges of teaching in remote areas."</p>
+                <p class="testimonial-author">— Karma Lhamo, Teacher</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"The offline mode is brilliant. I studied all weekend without any internet connection."</p>
+                <p class="testimonial-author">— Ugyen Norbu, Student</p>
+            </div>
+        </div>
+        <div class="testimonial-controls">
+            <button class="testimonial-btn" id="prevBtn">←</button>
+            <div class="testimonial-dots" id="testimonialDots"></div>
+            <button class="testimonial-btn" id="nextBtn">→</button>
+        </div>
+    </div>
+</section>
+
+<!-- TEAM SECTION -->
+<section class="team-section">
+    <div class="info-section-title">
+        <h2>Our Team</h2>
+    </div>
+    <div class="team-grid">
+        <div class="team-card scroll-animate">
+            <div class="team-avatar">👨‍💻</div>
+            <h3 class="team-name">Member One</h3>
+            <p class="team-role">Full Stack Developer</p>
+        </div>
+        <div class="team-card scroll-animate">
+            <div class="team-avatar">👩‍🎨</div>
+            <h3 class="team-name">Member Two</h3>
+            <p class="team-role">UI/UX Designer</p>
+        </div>
+        <div class="team-card scroll-animate">
+            <div class="team-avatar">👨‍🔬</div>
+            <h3 class="team-name">Member Three</h3>
+            <p class="team-role">Backend Developer</p>
+        </div>
+        <div class="team-card scroll-animate">
+            <div class="team-avatar">👩‍💼</div>
+            <h3 class="team-name">Member Four</h3>
+            <p class="team-role">Project Manager</p>
+        </div>
+    </div>
+</section>
+
+<!-- CALL TO ACTION -->
+<section class="cta-section">
+    <div class="cta-inner scroll-animate">
+        <h2 class="cta-title">Ready to learn without limits?</h2>
+        <p class="cta-sub">Join thousands of students and teachers already using Edumos.</p>
+        <a href="intro.html" class="get-started-btn pulse-btn">Get Started</a>
+    </div>
+</section>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top-btn" id="scrollTopBtn">↑</button>
+
+<!-- FOOTER -->
+<footer class="main-footer">
+    <div class="footer-inner">
+        <p class="footer-brand">Edumos</p>
+        <p class="footer-sub">College of Science and Technology, Phuentsholing | Phone: +975-17774484</p>
+        <p class="footer-copy">© 2026 Edumos. Built for better learning.</p>
+    </div>
+</footer>
+
+<script src="js/script.js" defer></script>
+
+</body>
+</html>

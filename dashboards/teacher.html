@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Edumos</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+</head>
+<body class="dashboard-page">
+
+    <!-- TOP LEFT -->
+    <div class="top-left-bar">
+        <div class="current-page" id="currentPage">Teacher</div>
+        <button class="theme-toggle-btn" id="themeBtn">🎨</button>
+    </div>
+
+    <!-- THEME PANEL -->
+    <div class="theme-panel" id="themePanel">
+        <div class="theme-panel-section">
+            <p class="theme-panel-label">Mode</p>
+            <div class="theme-mode-row">
+                <button class="theme-mode-btn" id="lightBtn">☀️ Light</button>
+                <button class="theme-mode-btn" id="darkBtn">🌙 Dark</button>
+            </div>
+        </div>
+        <div class="theme-panel-section">
+            <p class="theme-panel-label">Gradient</p>
+            <div class="theme-gradient-row">
+                <button class="theme-grad-btn" data-grad="default" title="Default" style="background:linear-gradient(135deg,#ffffff,#4b5cff);"></button>
+                <button class="theme-grad-btn" data-grad="purple" title="Purple Dream" style="background:linear-gradient(135deg,#f3e7ff,#9b59b6);"></button>
+                <button class="theme-grad-btn" data-grad="ocean" title="Ocean" style="background:linear-gradient(135deg,#e0f7fa,#0077b6);"></button>
+                <button class="theme-grad-btn" data-grad="forest" title="Forest" style="background:linear-gradient(135deg,#e8f5e9,#2ecc71);"></button>
+                <button class="theme-grad-btn" data-grad="sunset" title="Sunset" style="background:linear-gradient(135deg,#fff3e0,#e74c3c);"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOP RIGHT -->
+    <div class="top-right-bar">
+        <button class="search-icon-btn" id="searchBtn">🔍</button>
+        <div class="menu-icon" id="menuBtn">☰</div>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="search-bar-wrap" id="searchBarWrap">
+        <div class="search-bar-top">
+            <input type="text" id="searchInput" class="search-bar-input" placeholder="Search pages, subjects..." />
+            <button class="search-bar-close" id="searchClose">✕</button>
+        </div>
+        <div class="search-results-drop" id="searchResults" style="display:none;"></div>
+    </div>
+
+    <!-- OVERLAY + SIDE MENU -->
+    <div class="overlay" id="overlay"></div>
+    <div class="side-menu" id="sideMenu">
+        <button class="close-btn" id="closeBtn">✕</button>
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../pages/about.html" class="nav-link">About</a>
+        <a href="../pages/faqs.html" class="nav-link">FAQs</a>
+        <a href="../pages/contact.html" class="nav-link">Contact</a>
+        <div class="side-menu-divider"></div>
+        <button class="nav-link logout-nav-btn" id="logoutBtn">🚪 Log Out</button>
+    </div>
+
+    <!-- TOP BAR -->
+    <div class="dash-topbar">
+        <div class="dash-user">
+
+            <!-- AVATAR -->
+            <div class="avatar-wrap" id="avatarWrap">
+                <div class="dash-avatar teacher-avatar" id="userAvatar">T</div>
+                <div class="avatar-camera-hint">📷</div>
+            </div>
+
+            <!-- PROFILE DROPDOWN -->
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-drop-header">
+                    <div class="profile-drop-avatar-wrap">
+                        <div class="profile-drop-avatar teacher-avatar" id="profileDropAvatar">T</div>
+                        <label class="profile-drop-camera" for="photoUpload" title="Change photo">📷</label>
+                        <input type="file" id="photoUpload" accept="image/*" style="display:none;" />
+                    </div>
+                    <div class="profile-drop-info">
+                        <p class="profile-drop-name" id="profileDropName">Teacher</p>
+                        <p class="profile-drop-role">🏫 Educator</p>
+                        <p class="profile-drop-school" id="profileDropSchool">School</p>
+                    </div>
+                </div>
+                <div class="profile-drop-divider"></div>
+                <div class="profile-drop-grade">Managing subjects from dashboard</div>
+            </div>
+
+            <div>
+                <p class="dash-name" id="userName">Welcome, Teacher!</p>
+                <p class="dash-role">🏫 Educator</p>
+            </div>
+        </div>
+
+        <div class="dash-school-info">
+            <p class="dash-school-name" id="schoolName">School</p>
+            <p class="dash-subject-name">Your assigned subjects</p>
+        </div>
+
+        <div class="dash-sync">
+            <span class="sync-dot online"></span> Online
+        </div>
+    </div>
+
+    <!-- DASHBOARD BODY -->
+    <div class="dash-body">
+        <div class="class-tabs-header">
+            <h2 class="teacher-dash-title">📋 My Subjects</h2>
+            <button class="add-class-btn" id="addClassBtn">+ Add Subject</button>
+        </div>
+        <div class="subject-grid" id="teacherSubjectGrid"></div>
+        <div class="no-class-msg" id="noClassMsg">
+            <p>📚 No subjects added yet.</p>
+            <p>Click <strong>+ Add Subject</strong> to get started!</p>
+        </div>
+    </div>
+
+    <!-- ADD SUBJECT MODAL -->
+    <div class="modal-overlay" id="addClassModal" style="display:none;">
+        <div class="modal-card">
+            <button class="modal-close" id="addClassClose">✕</button>
+            <h3 class="modal-title">Add a Subject</h3>
+            <p class="modal-hint">Select the class and subject you teach</p>
+            <div class="form-group" style="margin-top:16px; text-align:left;">
+                <label>Class</label>
+                <select id="addGradeSelect" class="setup-select">
+                    <option value="">— Select Class —</option>
+                    <option>PP</option><option>I</option><option>II</option>
+                    <option>III</option><option>IV</option><option>V</option>
+                    <option>VI</option><option>VII</option><option>VIII</option>
+                    <option>IX</option><option>X</option>
+                    <option>XI</option><option>XII</option>
+                </select>
+            </div>
+            <div class="form-group" id="addStreamGroup" style="display:none; text-align:left;">
+                <label>Stream</label>
+                <select id="addStreamSelect" class="setup-select">
+                    <option value="">— Select Stream —</option>
+                    <option>Science</option>
+                    <option>Commerce</option>
+                    <option>Arts</option>
+                </select>
+            </div>
+            <div class="form-group" id="addSubjectGroup" style="display:none; text-align:left;">
+                <label>Subject</label>
+                <select id="addSubjectSelect" class="setup-select">
+                    <option value="">— Select Subject —</option>
+                </select>
+            </div>
+            <button class="auth-btn" id="addClassConfirm" style="margin-top:20px;">Add Subject</button>
+        </div>
+    </div>
+
+    <!-- PIN MODAL -->
+    <div class="modal-overlay" id="pinModal" style="display:none;">
+        <div class="modal-card">
+            <button class="modal-close" id="pinModalClose">✕</button>
+            <div class="modal-icon" id="pinModalIcon">📘</div>
+            <h3 class="modal-title" id="pinModalSubject">Mathematics</h3>
+            <p class="modal-hint" id="pinModalClass">Class X</p>
+            <p class="modal-hint" id="pinModalHint">Set a PIN for students to access this subject</p>
+            <div class="pin-inputs">
+                <input type="text" maxlength="1" class="pin-box" id="t1" />
+                <input type="text" maxlength="1" class="pin-box" id="t2" />
+                <input type="text" maxlength="1" class="pin-box" id="t3" />
+                <input type="text" maxlength="1" class="pin-box" id="t4" />
+            </div>
+            <p class="pin-hint" id="currentPinDisplay"></p>
+            <p class="modal-error" id="pinModalError" style="display:none;"></p>
+            <button class="auth-btn" id="pinModalSave" style="margin-top:16px;">Save PIN</button>
+            <button class="pin-reset-btn" id="pinModalReset" style="display:none;">🔄 Reset PIN</button>
+        </div>
+    </div>
+
+    <!-- LOGOUT MODAL -->
+    <div class="modal-overlay" id="logoutModal" style="display:none;">
+        <div class="modal-card">
+            <div class="modal-icon">🚪</div>
+            <h3 class="modal-title">Log Out?</h3>
+            <p class="modal-hint">Are you sure you want to log out of Edumos?</p>
+            <button class="auth-btn" id="logoutConfirm" style="margin-top:16px;">Yes, Log Out</button>
+            <button class="pin-reset-btn" id="logoutCancel" style="margin-top:10px; background:rgba(0,0,0,0.05); color:#666; border-color:rgba(0,0,0,0.1);">Cancel</button>
+        </div>
+    </div>
+
+    <button class="scroll-top-btn" id="scrollTopBtn">↑</button>
+
+    <script src="../js/script.js" defer></script>
+    <script>
+        // ── SESSION DATA ──
+        const name   = sessionStorage.getItem("userName") || "Teacher";
+        const school = sessionStorage.getItem("school")   || "Your School";
+
+        document.getElementById("userName").textContent      = `Welcome, ${name}!`;
+        document.getElementById("schoolName").textContent    = school;
+        document.getElementById("profileDropName").textContent   = name;
+        document.getElementById("profileDropSchool").textContent = school;
+
+        // ── AVATAR / PROFILE PICTURE ──
+        const avatarKey    = `edumos_avatar_${name}`;
+        const savedPhoto   = localStorage.getItem(avatarKey);
+        const avatarEl     = document.getElementById("userAvatar");
+        const dropAvatarEl = document.getElementById("profileDropAvatar");
+        const initial      = name.charAt(0).toUpperCase();
+
+        function setAvatar(src) {
+            if (src) {
+                [avatarEl, dropAvatarEl].forEach(el => {
+                    el.style.backgroundImage    = `url(${src})`;
+                    el.style.backgroundSize     = "cover";
+                    el.style.backgroundPosition = "center";
+                    el.textContent              = "";
+                });
+            } else {
+                [avatarEl, dropAvatarEl].forEach(el => {
+                    el.style.backgroundImage = "";
+                    el.textContent           = initial;
+                });
+            }
+        }
+
+        setAvatar(savedPhoto);
+
+        document.getElementById("photoUpload").addEventListener("change", function() {
+            const file = this.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                localStorage.setItem(avatarKey, e.target.result);
+                setAvatar(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // ── PROFILE DROPDOWN ──
+        const avatarWrap      = document.getElementById("avatarWrap");
+        const profileDropdown = document.getElementById("profileDropdown");
+
+        avatarWrap.addEventListener("click", e => {
+            e.stopPropagation();
+            profileDropdown.classList.toggle("open");
+        });
+
+        document.addEventListener("click", e => {
+            if (!profileDropdown.contains(e.target) && e.target !== avatarWrap) {
+                profileDropdown.classList.remove("open");
+            }
+        });
+
+        // ── LOGOUT ──
+        const logoutModal   = document.getElementById("logoutModal");
+        const logoutConfirm = document.getElementById("logoutConfirm");
+        const logoutCancel  = document.getElementById("logoutCancel");
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            document.getElementById("sideMenu").classList.remove("active");
+            document.getElementById("overlay").classList.remove("active");
+            document.body.style.overflow = "";
+            logoutModal.style.display = "flex";
+        });
+
+        logoutConfirm.addEventListener("click", () => {
+            sessionStorage.clear();
+            window.location.href = "../index.html";
+        });
+
+        logoutCancel.addEventListener("click", () => {
+            logoutModal.style.display = "none";
+        });
+
+        // ── SUBJECTS ──
+        const subjectsByGrade = {
+            "PP":   ["Art Education","Dzongkha","English","Health & Physical Education","Mathematics","Environmental Studies (EVS)"],
+            "I":    ["Art Education","Dzongkha","English","Health & Physical Education","Mathematics","Environmental Studies (EVS)"],
+            "II":   ["Art Education","Dzongkha","English","Health & Physical Education","Mathematics","Environmental Studies (EVS)"],
+            "III":  ["Art Education","Dzongkha","English","Health & Physical Education","Mathematics","Environmental Studies (EVS)"],
+            "IV":   ["English","Dzongkha","Mathematics","Social Studies","Information & Communication Technology","Health & Physical Education"],
+            "V":    ["English","Dzongkha","Mathematics","Social Studies","Information & Communication Technology","Health & Physical Education"],
+            "VI":   ["English","Dzongkha","Mathematics","Social Studies","Information & Communication Technology","Health & Physical Education"],
+            "VII":  ["English","Dzongkha","Science","History & Civics","Geography","Information & Communication Technology","Health & Physical Education"],
+            "VIII": ["English","Dzongkha","Science","History & Civics","Geography","Information & Communication Technology","Health & Physical Education"],
+            "IX":   ["English","Dzongkha","Mathematics","Physics","Chemistry","Biology","History","Geography","Economics","Information & Communication Technology"],
+            "X":    ["English","Dzongkha","Mathematics","Physics","Chemistry","Biology","History","Geography","Economics","Information & Communication Technology"],
+            "XI Science":   ["Pure Mathematics","Dzongkha","English","Biology","Physics","Chemistry","Information & Communication Technology"],
+            "XI Commerce":  ["Business Mathematics","English","Dzongkha","Accountancy","Economics","Business & Entrepreneurship","Information & Communication Technology"],
+            "XI Arts":      ["English","Dzongkha","Business Mathematics","Geography","History","Information & Communication Technology"],
+            "XII Science":  ["Pure Mathematics","Dzongkha","English","Biology","Physics","Chemistry","Information & Communication Technology"],
+            "XII Commerce": ["Business Mathematics","English","Dzongkha","Accountancy","Economics","Business & Entrepreneurship","Information & Communication Technology"],
+            "XII Arts":     ["English","Dzongkha","Business Mathematics","Geography","History","Information & Communication Technology"]
+        };
+
+        const subjectIcons = {
+            "English":"📖","Dzongkha":"🇧🇹","Mathematics":"📐",
+            "Pure Mathematics":"📐","Business Mathematics":"🧮",
+            "Physics":"⚡","Chemistry":"🧪","Biology":"🌿",
+            "Science":"🔬","History":"📜","History & Civics":"📜",
+            "Geography":"🌍","Economics":"📊","Accountancy":"🧾",
+            "Business & Entrepreneurship":"💼","Social Studies":"🌐",
+            "Information & Communication Technology":"💻",
+            "Health & Physical Education":"🏃","Art Education":"🎨",
+            "Environmental Studies (EVS)":"🍃"
+        };
+
+        const assignedKey = `teacher_subjects_${school}`.replace(/\s/g,"_");
+        let assigned      = JSON.parse(sessionStorage.getItem(assignedKey) || "[]");
+
+        const subjectGrid = document.getElementById("teacherSubjectGrid");
+        const noClassMsg  = document.getElementById("noClassMsg");
+        let currentPinEntry = null;
+
+        function renderCards() {
+            subjectGrid.innerHTML = "";
+            noClassMsg.style.display  = assigned.length === 0 ? "block" : "none";
+            subjectGrid.style.display = assigned.length === 0 ? "none" : "grid";
+
+            assigned.forEach((entry, index) => {
+                const { grade, subject } = entry;
+                const pinKey = `pin_${school}_${grade}_${subject}`.replace(/\s/g,"_");
+                const pin    = sessionStorage.getItem(pinKey);
+                const hasPin = !!pin;
+
+                const card = document.createElement("div");
+                card.classList.add("subject-card", "teacher-subject-card");
+
+                card.innerHTML = `
+                    <div class="teacher-card-grade-tag">Class ${grade}</div>
+                    <div class="subject-card-icon">${subjectIcons[subject] || "📘"}</div>
+                    <h3 class="subject-card-name">${subject}</h3>
+                    <div class="subject-card-status">
+                        ${hasPin
+                            ? `<span class="subject-badge unlocked-badge">✅ PIN: ${pin}</span>`
+                            : `<span class="subject-badge locked-badge">⚠️ No PIN Set</span>`
+                        }
+                    </div>
+                    <div class="teacher-card-stats">
+                        <span>👥 -- students</span>
+                        <span>⭐ -- avg</span>
+                    </div>
+                    <button class="subject-card-btn unlock-btn">
+                        ${hasPin ? "✏️ Change PIN" : "🔑 Set PIN"}
+                    </button>
+                    <button class="remove-subject-btn">✕ Remove</button>
+                `;
+
+                card.querySelector(".unlock-btn").addEventListener("click", () => {
+                    openPinModal(entry, hasPin, pin);
+                });
+
+                card.querySelector(".remove-subject-btn").addEventListener("click", () => {
+                    removeSubject(index);
+                });
+
+                subjectGrid.appendChild(card);
+            });
+        }
+
+        function removeSubject(index) {
+            const entry = assigned[index];
+            if (!confirm(`Remove ${entry.subject} — Class ${entry.grade}?`)) return;
+            assigned.splice(index, 1);
+            sessionStorage.setItem(assignedKey, JSON.stringify(assigned));
+            renderCards();
+        }
+
+        // ── PIN MODAL ──
+        const pinModal          = document.getElementById("pinModal");
+        const pinModalClose     = document.getElementById("pinModalClose");
+        const pinModalSave      = document.getElementById("pinModalSave");
+        const pinModalReset     = document.getElementById("pinModalReset");
+        const pinModalError     = document.getElementById("pinModalError");
+        const currentPinDisplay = document.getElementById("currentPinDisplay");
+
+        function openPinModal(entry, hasPin, existingPin) {
+            currentPinEntry = entry;
+            document.getElementById("pinModalSubject").textContent = entry.subject;
+            document.getElementById("pinModalIcon").textContent    = subjectIcons[entry.subject] || "📘";
+            document.getElementById("pinModalClass").textContent   = `Class ${entry.grade}`;
+            document.getElementById("pinModalHint").textContent    = hasPin
+                ? "Change the PIN for this subject"
+                : "Set a PIN for students to access this subject";
+            currentPinDisplay.textContent = hasPin ? `Current PIN: ${existingPin}` : "";
+            pinModalReset.style.display   = hasPin ? "block" : "none";
+            pinModalError.style.display   = "none";
+            ["t1","t2","t3","t4"].forEach(id => document.getElementById(id).value = "");
+            pinModal.style.display = "flex";
+            document.getElementById("t1").focus();
+        }
+
+        pinModalClose.addEventListener("click", () => { pinModal.style.display = "none"; });
+        pinModal.addEventListener("click", e => { if (e.target === pinModal) pinModal.style.display = "none"; });
+
+        pinModalSave.addEventListener("click", () => {
+            const pin = ["t1","t2","t3","t4"].map(id => document.getElementById(id).value).join("");
+            if (pin.length < 4) {
+                pinModalError.textContent   = "Please enter all 4 digits.";
+                pinModalError.style.display = "block";
+                return;
+            }
+            const pinKey = `pin_${school}_${currentPinEntry.grade}_${currentPinEntry.subject}`.replace(/\s/g,"_");
+            sessionStorage.setItem(pinKey, pin);
+            alert(`✅ PIN ${pin} set for ${currentPinEntry.subject} — Class ${currentPinEntry.grade}!\nShare this with your students.`);
+            pinModal.style.display = "none";
+            renderCards();
+        });
+
+        pinModalReset.addEventListener("click", () => {
+            if (!confirm(`Reset PIN for ${currentPinEntry.subject} — Class ${currentPinEntry.grade}?\nStudents will lose access.`)) return;
+            const pinKey = `pin_${school}_${currentPinEntry.grade}_${currentPinEntry.subject}`.replace(/\s/g,"_");
+            sessionStorage.removeItem(pinKey);
+            pinModal.style.display = "none";
+            renderCards();
+        });
+
+        ["t1","t2","t3","t4"].forEach((id, i, arr) => {
+            const box = document.getElementById(id);
+            box.addEventListener("input", () => {
+                box.value = box.value.replace(/\D/,"");
+                if (box.value && i < arr.length - 1) document.getElementById(arr[i+1]).focus();
+            });
+            box.addEventListener("keydown", e => {
+                if (e.key === "Backspace" && !box.value && i > 0) document.getElementById(arr[i-1]).focus();
+            });
+        });
+
+        // ── ADD SUBJECT MODAL ──
+        const addClassModal    = document.getElementById("addClassModal");
+        const addClassClose    = document.getElementById("addClassClose");
+        const addGradeSelect   = document.getElementById("addGradeSelect");
+        const addStreamGroup   = document.getElementById("addStreamGroup");
+        const addStreamSelect  = document.getElementById("addStreamSelect");
+        const addSubjectGroup  = document.getElementById("addSubjectGroup");
+        const addSubjectSelect = document.getElementById("addSubjectSelect");
+        const addClassConfirm  = document.getElementById("addClassConfirm");
+
+        document.getElementById("addClassBtn").addEventListener("click", () => {
+            addGradeSelect.value  = "";
+            addStreamSelect.value = "";
+            addSubjectSelect.innerHTML = '<option value="">— Select Subject —</option>';
+            addStreamGroup.style.display  = "none";
+            addSubjectGroup.style.display = "none";
+            addClassModal.style.display   = "flex";
+        });
+
+        addClassClose.addEventListener("click", () => { addClassModal.style.display = "none"; });
+        addClassModal.addEventListener("click", e => { if (e.target === addClassModal) addClassModal.style.display = "none"; });
+
+        addGradeSelect.addEventListener("change", () => {
+            const g = addGradeSelect.value;
+            addStreamSelect.value = "";
+            addSubjectSelect.innerHTML = '<option value="">— Select Subject —</option>';
+            addSubjectGroup.style.display = "none";
+            if (g === "XI" || g === "XII") {
+                addStreamGroup.style.display = "block";
+            } else {
+                addStreamGroup.style.display = "none";
+                if (g) populateSubjects(g);
+            }
+        });
+
+        addStreamSelect.addEventListener("change", () => {
+            const g      = addGradeSelect.value;
+            const stream = addStreamSelect.value;
+            addSubjectSelect.innerHTML = '<option value="">— Select Subject —</option>';
+            addSubjectGroup.style.display = "none";
+            if (stream) populateSubjects(`${g} ${stream}`);
+        });
+
+        function populateSubjects(key) {
+            const subs = subjectsByGrade[key] || [];
+            addSubjectSelect.innerHTML = '<option value="">— Select Subject —</option>';
+            subs.forEach(s => {
+                const opt = document.createElement("option");
+                opt.textContent = s;
+                addSubjectSelect.appendChild(opt);
+            });
+            addSubjectGroup.style.display = "block";
+        }
+
+        addClassConfirm.addEventListener("click", () => {
+            const g       = addGradeSelect.value;
+            const stream  = addStreamSelect.value;
+            const subject = addSubjectSelect.value;
+
+            if (!g) { alert("Please select a class."); return; }
+            if ((g === "XI" || g === "XII") && !stream) { alert("Please select a stream."); return; }
+            if (!subject) { alert("Please select a subject."); return; }
+
+            const gradeLabel = stream ? `${g} ${stream}` : g;
+            const exists     = assigned.some(e => e.grade === gradeLabel && e.subject === subject);
+            if (exists) { alert(`${subject} for Class ${gradeLabel} is already added!`); return; }
+
+            assigned.push({ grade: gradeLabel, subject });
+            sessionStorage.setItem(assignedKey, JSON.stringify(assigned));
+            addClassModal.style.display = "none";
+            renderCards();
+        });
+
+        renderCards();
+    </script>
+</body>
+</html>

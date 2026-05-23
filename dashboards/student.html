@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Edumos</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+</head>
+<body class="dashboard-page">
+
+    <!-- TOP LEFT -->
+    <div class="top-left-bar">
+        <div class="current-page" id="currentPage">Student</div>
+        <button class="theme-toggle-btn" id="themeBtn">🎨</button>
+    </div>
+
+    <!-- THEME PANEL -->
+    <div class="theme-panel" id="themePanel">
+        <div class="theme-panel-section">
+            <p class="theme-panel-label">Mode</p>
+            <div class="theme-mode-row">
+                <button class="theme-mode-btn" id="lightBtn">☀️ Light</button>
+                <button class="theme-mode-btn" id="darkBtn">🌙 Dark</button>
+            </div>
+        </div>
+        <div class="theme-panel-section">
+            <p class="theme-panel-label">Gradient</p>
+            <div class="theme-gradient-row">
+                <button class="theme-grad-btn" data-grad="default" title="Default" style="background:linear-gradient(135deg,#ffffff,#4b5cff);"></button>
+                <button class="theme-grad-btn" data-grad="purple" title="Purple Dream" style="background:linear-gradient(135deg,#f3e7ff,#9b59b6);"></button>
+                <button class="theme-grad-btn" data-grad="ocean" title="Ocean" style="background:linear-gradient(135deg,#e0f7fa,#0077b6);"></button>
+                <button class="theme-grad-btn" data-grad="forest" title="Forest" style="background:linear-gradient(135deg,#e8f5e9,#2ecc71);"></button>
+                <button class="theme-grad-btn" data-grad="sunset" title="Sunset" style="background:linear-gradient(135deg,#fff3e0,#e74c3c);"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOP RIGHT -->
+    <div class="top-right-bar">
+        <button class="search-icon-btn" id="searchBtn">🔍</button>
+        <div class="menu-icon" id="menuBtn">☰</div>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="search-bar-wrap" id="searchBarWrap">
+        <div class="search-bar-top">
+            <input type="text" id="searchInput" class="search-bar-input" placeholder="Search pages, subjects..." />
+            <button class="search-bar-close" id="searchClose">✕</button>
+        </div>
+        <div class="search-results-drop" id="searchResults" style="display:none;"></div>
+    </div>
+
+    <!-- OVERLAY + SIDE MENU -->
+    <div class="overlay" id="overlay"></div>
+    <div class="side-menu" id="sideMenu">
+        <button class="close-btn" id="closeBtn">✕</button>
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../pages/about.html" class="nav-link">About</a>
+        <a href="../pages/faqs.html" class="nav-link">FAQs</a>
+        <a href="../pages/contact.html" class="nav-link">Contact</a>
+        <div class="side-menu-divider"></div>
+        <button class="nav-link logout-nav-btn" id="logoutBtn">🚪 Log Out</button>
+    </div>
+
+    <!-- TOP BAR -->
+    <div class="dash-topbar">
+        <div class="dash-user">
+
+            <!-- AVATAR -->
+            <div class="avatar-wrap" id="avatarWrap">
+                <div class="dash-avatar" id="userAvatar">S</div>
+                <div class="avatar-camera-hint">📷</div>
+            </div>
+
+            <!-- PROFILE DROPDOWN -->
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-drop-header">
+                    <div class="profile-drop-avatar-wrap">
+                        <div class="profile-drop-avatar" id="profileDropAvatar">S</div>
+                        <label class="profile-drop-camera" for="photoUpload" title="Change photo">📷</label>
+                        <input type="file" id="photoUpload" accept="image/*" style="display:none;" />
+                    </div>
+                    <div class="profile-drop-info">
+                        <p class="profile-drop-name" id="profileDropName">Student</p>
+                        <p class="profile-drop-role">🎓 Learner</p>
+                        <p class="profile-drop-school" id="profileDropSchool">School</p>
+                    </div>
+                </div>
+                <div class="profile-drop-divider"></div>
+                <div class="profile-drop-grade" id="profileDropGrade">Class —</div>
+            </div>
+
+            <div>
+                <p class="dash-name" id="userName">Welcome, Student!</p>
+                <p class="dash-role">🎓 Learner</p>
+            </div>
+        </div>
+
+        <div class="dash-school-info">
+            <p class="dash-school-name" id="schoolName">School</p>
+            <p class="dash-subject-name" id="gradeName">Grade</p>
+        </div>
+
+        <div class="dash-sync">
+            <span class="sync-dot"></span> Offline Mode
+        </div>
+    </div>
+
+    <!-- DASHBOARD BODY -->
+    <div class="dash-body">
+        <div class="std-section-title">
+            <h2>📚 My Subjects</h2>
+            <p>Enter the PIN from your teacher to unlock each subject</p>
+        </div>
+        <div class="subject-grid" id="subjectGrid"></div>
+    </div>
+
+    <!-- PIN MODAL -->
+    <div class="modal-overlay" id="pinModal" style="display:none;">
+        <div class="modal-card">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-icon" id="modalIcon">📘</div>
+            <h3 class="modal-title" id="modalSubject">Mathematics</h3>
+            <p class="modal-hint">Enter the 4-digit PIN from your teacher</p>
+            <div class="pin-inputs">
+                <input type="text" maxlength="1" class="pin-box" id="m1" />
+                <input type="text" maxlength="1" class="pin-box" id="m2" />
+                <input type="text" maxlength="1" class="pin-box" id="m3" />
+                <input type="text" maxlength="1" class="pin-box" id="m4" />
+            </div>
+            <p class="modal-error" id="modalError" style="display:none;">❌ Incorrect PIN. Try again.</p>
+            <button class="auth-btn" id="modalSubmit" style="margin-top:16px;">Unlock</button>
+        </div>
+    </div>
+
+    <!-- LOGOUT MODAL -->
+    <div class="modal-overlay" id="logoutModal" style="display:none;">
+        <div class="modal-card">
+            <div class="modal-icon">🚪</div>
+            <h3 class="modal-title">Log Out?</h3>
+            <p class="modal-hint">Are you sure you want to log out of Edumos?</p>
+            <button class="auth-btn" id="logoutConfirm" style="margin-top:16px;">Yes, Log Out</button>
+            <button class="pin-reset-btn" id="logoutCancel" style="margin-top:10px; background:rgba(0,0,0,0.05); color:#666; border-color:rgba(0,0,0,0.1);">Cancel</button>
+        </div>
+    </div>
+
+    <button class="scroll-top-btn" id="scrollTopBtn">↑</button>
+
+    <script src="../js/script.js" defer></script>
+    <script>
+        // ── SESSION DATA ──
+        const name   = sessionStorage.getItem("userName") || "Student";
+        const school = sessionStorage.getItem("school")   || "Your School";
+        const grade  = sessionStorage.getItem("selectedGrade") || "X";
+        const stream = sessionStorage.getItem("selectedStream") || "";
+
+        document.getElementById("userName").textContent      = `Welcome, ${name}!`;
+        document.getElementById("schoolName").textContent    = school;
+        document.getElementById("gradeName").textContent     = `Class ${grade}`;
+        document.getElementById("profileDropName").textContent   = name;
+        document.getElementById("profileDropSchool").textContent = school;
+        document.getElementById("profileDropGrade").textContent  = `Class ${grade}`;
+
+        // ── AVATAR / PROFILE PICTURE ──
+        const avatarKey    = `edumos_avatar_${name}`;
+        const savedPhoto   = localStorage.getItem(avatarKey);
+        const avatarEl     = document.getElementById("userAvatar");
+        const dropAvatarEl = document.getElementById("profileDropAvatar");
+        const initial      = name.charAt(0).toUpperCase();
+
+        function setAvatar(src) {
+            if (src) {
+                [avatarEl, dropAvatarEl].forEach(el => {
+                    el.style.backgroundImage    = `url(${src})`;
+                    el.style.backgroundSize     = "cover";
+                    el.style.backgroundPosition = "center";
+                    el.textContent              = "";
+                });
+            } else {
+                [avatarEl, dropAvatarEl].forEach(el => {
+                    el.style.backgroundImage = "";
+                    el.textContent           = initial;
+                });
+            }
+        }
+
+        setAvatar(savedPhoto);
+
+        document.getElementById("photoUpload").addEventListener("change", function() {
+            const file = this.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                localStorage.setItem(avatarKey, e.target.result);
+                setAvatar(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // ── PROFILE DROPDOWN ──
+        const avatarWrap      = document.getElementById("avatarWrap");
+        const profileDropdown = document.getElementById("profileDropdown");
+
+        avatarWrap.addEventListener("click", e => {
+            e.stopPropagation();
+            profileDropdown.classList.toggle("open");
+        });
+
+        document.addEventListener("click", e => {
+            if (!profileDropdown.contains(e.target) && e.target !== avatarWrap) {
+                profileDropdown.classList.remove("open");
+            }
+        });
+
+        // ── LOGOUT ──
+        const logoutModal   = document.getElementById("logoutModal");
+        const logoutConfirm = document.getElementById("logoutConfirm");
+        const logoutCancel  = document.getElementById("logoutCancel");
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            document.getElementById("sideMenu").classList.remove("active");
+            document.getElementById("overlay").classList.remove("active");
+            document.body.style.overflow = "";
+            logoutModal.style.display = "flex";
+        });
+
+        logoutConfirm.addEventListener("click", () => {
+            sessionStorage.clear();
+            window.location.href = "../index.html";
+        });
+
+        logoutCancel.addEventListener("click", () => {
+            logoutModal.style.display = "none";
+        });
+
+        // ── SUBJECTS ──
+        const subjectsByGrade = {
+            "PP":   ["Art Education","Dzongkha","English","Health & Physical Education","Mathematics","Environmental Studies (EVS)"],
+            "I":    ["Art Education","Dzongkha","English","Health & Physical Education","Mathematics","Environmental Studies (EVS)"],
+            "II":   ["Art Education","Dzongkha","English","Health & Physical Education","Mathematics","Environmental Studies (EVS)"],
+            "III":  ["Art Education","Dzongkha","English","Health & Physical Education","Mathematics","Environmental Studies (EVS)"],
+            "IV":   ["English","Dzongkha","Mathematics","Social Studies","Information & Communication Technology","Health & Physical Education"],
+            "V":    ["English","Dzongkha","Mathematics","Social Studies","Information & Communication Technology","Health & Physical Education"],
+            "VI":   ["English","Dzongkha","Mathematics","Social Studies","Information & Communication Technology","Health & Physical Education"],
+            "VII":  ["English","Dzongkha","Science","History & Civics","Geography","Information & Communication Technology","Health & Physical Education"],
+            "VIII": ["English","Dzongkha","Science","History & Civics","Geography","Information & Communication Technology","Health & Physical Education"],
+            "IX":   ["English","Dzongkha","Mathematics","Physics","Chemistry","Biology","History","Geography","Economics","Information & Communication Technology"],
+            "X":    ["English","Dzongkha","Mathematics","Physics","Chemistry","Biology","History","Geography","Economics","Information & Communication Technology"],
+            "XI Science":   ["Pure Mathematics","Dzongkha","English","Biology","Physics","Chemistry","Information & Communication Technology"],
+            "XI Commerce":  ["Business Mathematics","English","Dzongkha","Accountancy","Economics","Business & Entrepreneurship","Information & Communication Technology"],
+            "XI Arts":      ["English","Dzongkha","Business Mathematics","Geography","History","Information & Communication Technology"],
+            "XII Science":  ["Pure Mathematics","Dzongkha","English","Biology","Physics","Chemistry","Information & Communication Technology"],
+            "XII Commerce": ["Business Mathematics","English","Dzongkha","Accountancy","Economics","Business & Entrepreneurship","Information & Communication Technology"],
+            "XII Arts":     ["English","Dzongkha","Business Mathematics","Geography","History","Information & Communication Technology"]
+        };
+
+        const subjectIcons = {
+            "English":"📖","Dzongkha":"🇧🇹","Mathematics":"📐",
+            "Pure Mathematics":"📐","Business Mathematics":"🧮",
+            "Physics":"⚡","Chemistry":"🧪","Biology":"🌿",
+            "Science":"🔬","History":"📜","History & Civics":"📜",
+            "Geography":"🌍","Economics":"📊","Accountancy":"🧾",
+            "Business & Entrepreneurship":"💼","Social Studies":"🌐",
+            "Information & Communication Technology":"💻",
+            "Health & Physical Education":"🏃","Art Education":"🎨",
+            "Environmental Studies (EVS)":"🍃","Business Studies":"📋"
+        };
+
+        const subjects    = subjectsByGrade[grade] || [];
+        const grid        = document.getElementById("subjectGrid");
+        const unlockedKey = `unlocked_${school}_${grade}`.replace(/\s/g,"_");
+        let unlocked      = JSON.parse(sessionStorage.getItem(unlockedKey) || "[]");
+
+        function renderSubjects() {
+            grid.innerHTML = "";
+            subjects.forEach(subject => {
+                const isUnlocked = unlocked.includes(subject);
+                const card = document.createElement("div");
+                card.classList.add("subject-card");
+                if (isUnlocked) card.classList.add("subject-unlocked");
+
+                card.innerHTML = `
+                    <div class="subject-card-icon">${subjectIcons[subject] || "📘"}</div>
+                    <h3 class="subject-card-name">${subject}</h3>
+                    <div class="subject-card-status">
+                        ${isUnlocked
+                            ? `<span class="subject-badge unlocked-badge">✅ Unlocked</span>`
+                            : `<span class="subject-badge locked-badge">🔒 Locked</span>`
+                        }
+                    </div>
+                    <button class="subject-card-btn ${isUnlocked ? "open-btn" : "unlock-btn"}">
+                        ${isUnlocked ? "Open →" : "Enter PIN"}
+                    </button>
+                `;
+
+                card.querySelector("button").addEventListener("click", () => {
+                    if (isUnlocked) {
+                        alert(`Opening ${subject}... (Content coming soon!)`);
+                    } else {
+                        openPinModal(subject);
+                    }
+                });
+
+                grid.appendChild(card);
+            });
+        }
+
+        // ── PIN MODAL ──
+        const modal       = document.getElementById("pinModal");
+        const modalClose  = document.getElementById("modalClose");
+        const modalSubmit = document.getElementById("modalSubmit");
+        const modalError  = document.getElementById("modalError");
+        let currentSubject = "";
+
+        function openPinModal(subject) {
+            currentSubject = subject;
+            document.getElementById("modalSubject").textContent = subject;
+            document.getElementById("modalIcon").textContent    = subjectIcons[subject] || "📘";
+            modalError.style.display = "none";
+            ["m1","m2","m3","m4"].forEach(id => document.getElementById(id).value = "");
+            modal.style.display = "flex";
+            document.getElementById("m1").focus();
+        }
+
+        modalClose.addEventListener("click", () => { modal.style.display = "none"; });
+        modal.addEventListener("click", e => { if (e.target === modal) modal.style.display = "none"; });
+
+        ["m1","m2","m3","m4"].forEach((id, i, arr) => {
+            const box = document.getElementById(id);
+            box.addEventListener("input", () => {
+                box.value = box.value.replace(/\D/,"");
+                if (box.value && i < arr.length - 1) document.getElementById(arr[i+1]).focus();
+            });
+            box.addEventListener("keydown", e => {
+                if (e.key === "Backspace" && !box.value && i > 0) document.getElementById(arr[i-1]).focus();
+            });
+        });
+
+        modalSubmit.addEventListener("click", () => {
+            const pin = ["m1","m2","m3","m4"].map(id => document.getElementById(id).value).join("");
+            if (pin.length < 4) { alert("Please enter all 4 digits."); return; }
+
+            const pinKey     = `pin_${school}_${grade}_${currentSubject}`.replace(/\s/g,"_");
+            const correctPin = sessionStorage.getItem(pinKey);
+
+            if (!correctPin) {
+                modalError.textContent   = "❌ No PIN set yet. Ask your teacher to set one first.";
+                modalError.style.display = "block";
+                return;
+            }
+
+            if (pin !== correctPin) {
+                modalError.textContent   = "❌ Incorrect PIN. Check with your teacher.";
+                modalError.style.display = "block";
+                ["m1","m2","m3","m4"].forEach(id => document.getElementById(id).value = "");
+                document.getElementById("m1").focus();
+                return;
+            }
+
+            if (!unlocked.includes(currentSubject)) unlocked.push(currentSubject);
+            sessionStorage.setItem(unlockedKey, JSON.stringify(unlocked));
+            modal.style.display = "none";
+            renderSubjects();
+        });
+
+        renderSubjects();
+    </script>
+</body>
+</html>

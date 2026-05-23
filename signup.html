@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Edumos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+    <!-- TOP LEFT -->
+<div class="top-left-bar">
+    <div class="current-page" id="currentPage">Home</div>
+    <button class="theme-toggle-btn" id="themeBtn">🎨</button>
+</div>
+
+<!-- THEME PANEL -->
+<div class="theme-panel" id="themePanel">
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Mode</p>
+        <div class="theme-mode-row">
+            <button class="theme-mode-btn" id="lightBtn">☀️ Light</button>
+            <button class="theme-mode-btn" id="darkBtn">🌙 Dark</button>
+        </div>
+    </div>
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Gradient</p>
+        <div class="theme-gradient-row">
+            <button class="theme-grad-btn" data-grad="default" title="Default" style="background:linear-gradient(135deg,#ffffff,#4b5cff);"></button>
+            <button class="theme-grad-btn" data-grad="purple" title="Purple Dream" style="background:linear-gradient(135deg,#f3e7ff,#9b59b6);"></button>
+            <button class="theme-grad-btn" data-grad="ocean" title="Ocean" style="background:linear-gradient(135deg,#e0f7fa,#0077b6);"></button>
+            <button class="theme-grad-btn" data-grad="forest" title="Forest" style="background:linear-gradient(135deg,#e8f5e9,#2ecc71);"></button>
+            <button class="theme-grad-btn" data-grad="sunset" title="Sunset" style="background:linear-gradient(135deg,#fff3e0,#e74c3c);"></button>
+        </div>
+    </div>
+</div>
+
+<!-- TOP RIGHT -->
+<div class="top-right-bar">
+    <button class="search-icon-btn" id="searchBtn">🔍</button>
+    <div class="menu-icon" id="menuBtn">☰</div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar-wrap" id="searchBarWrap">
+    <div class="search-bar-top">
+        <input type="text" id="searchInput" class="search-bar-input" placeholder="Search pages, subjects..." />
+        <button class="search-bar-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results-drop" id="searchResults" style="display:none;"></div>
+</div>
+
+<!-- OVERLAY + SIDE MENU -->
+<div class="overlay" id="overlay"></div>
+<div class="side-menu" id="sideMenu">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="pages/about.html" class="nav-link">About</a>
+    <a href="pages/faqs.html" class="nav-link">FAQs</a>
+    <a href="pages/contact.html" class="nav-link">Contact</a>
+</div>
+
+    <div class="auth-container">
+        <div class="auth-card">
+
+            <div class="logo"><span id="logo-text"></span></div>
+
+            <h2 class="auth-title">Create Account</h2>
+            <p class="auth-role" id="roleLabel">Signing up as Learner</p>
+
+            <div class="auth-form">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" id="firstName" placeholder="Pema" />
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" id="lastName" placeholder="Wangyel" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="wangyel@example.com" />
+                </div>
+
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="phone" placeholder="+975-XXXXXXXX" />
+                </div>
+
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <input type="date" id="dob" />
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="••••••••" />
+                </div>
+
+                <button class="auth-btn" id="signupBtn">Create Account</button>
+
+                <p class="auth-switch">
+                    Already have an account?
+                    <a href="login.html" id="loginLink">Log in</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js" defer></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const role = params.get("role") || "learner";
+
+        document.getElementById("roleLabel").textContent =
+            `Signing up as ${role === "teacher" ? "Educator" : "Learner"}`;
+
+        document.getElementById("loginLink").href = `login.html?role=${role}`;
+
+        document.getElementById("signupBtn").addEventListener("click", () => {
+            const firstName = document.getElementById("firstName").value.trim();
+            const lastName  = document.getElementById("lastName").value.trim();
+            const email     = document.getElementById("email").value.trim();
+            const phone     = document.getElementById("phone").value.trim();
+            const dob       = document.getElementById("dob").value;
+            const password  = document.getElementById("password").value.trim();
+
+            if (!firstName || !email || !phone || !dob || !password) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Save name and role to sessionStorage
+            sessionStorage.setItem("userName", firstName + " " + lastName);
+            sessionStorage.setItem("userRole", role);
+
+            window.location.href = `onboarding/location.html?role=${role}`;
+        });
+    </script>
+</body>
+</html>

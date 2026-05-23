@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edumos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+
+    <!-- TOP LEFT -->
+<div class="top-left-bar">
+    <div class="current-page" id="currentPage">Home</div>
+    <button class="theme-toggle-btn" id="themeBtn">🎨</button>
+</div>
+
+<!-- THEME PANEL -->
+<div class="theme-panel" id="themePanel">
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Mode</p>
+        <div class="theme-mode-row">
+            <button class="theme-mode-btn" id="lightBtn">☀️ Light</button>
+            <button class="theme-mode-btn" id="darkBtn">🌙 Dark</button>
+        </div>
+    </div>
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Gradient</p>
+        <div class="theme-gradient-row">
+            <button class="theme-grad-btn" data-grad="default" title="Default" style="background:linear-gradient(135deg,#ffffff,#4b5cff);"></button>
+            <button class="theme-grad-btn" data-grad="purple" title="Purple Dream" style="background:linear-gradient(135deg,#f3e7ff,#9b59b6);"></button>
+            <button class="theme-grad-btn" data-grad="ocean" title="Ocean" style="background:linear-gradient(135deg,#e0f7fa,#0077b6);"></button>
+            <button class="theme-grad-btn" data-grad="forest" title="Forest" style="background:linear-gradient(135deg,#e8f5e9,#2ecc71);"></button>
+            <button class="theme-grad-btn" data-grad="sunset" title="Sunset" style="background:linear-gradient(135deg,#fff3e0,#e74c3c);"></button>
+        </div>
+    </div>
+</div>
+
+<!-- TOP RIGHT -->
+<div class="top-right-bar">
+    <button class="search-icon-btn" id="searchBtn">🔍</button>
+    <div class="menu-icon" id="menuBtn">☰</div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar-wrap" id="searchBarWrap">
+    <div class="search-bar-top">
+        <input type="text" id="searchInput" class="search-bar-input" placeholder="Search pages, subjects..." />
+        <button class="search-bar-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results-drop" id="searchResults" style="display:none;"></div>
+</div>
+
+<!-- OVERLAY + SIDE MENU -->
+<div class="overlay" id="overlay"></div>
+<div class="side-menu" id="sideMenu">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="pages/about.html" class="nav-link">About</a>
+    <a href="pages/faqs.html" class="nav-link">FAQs</a>
+    <a href="pages/contact.html" class="nav-link">Contact</a>
+</div>
+
+    <main class="intro-container">
+
+        <!-- FLOATING SHAPES -->
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+
+        <section class="glass-card welcome-card card-fadein">
+
+            <!-- LOGO -->
+            <div class="logo">
+                <span id="logo-text"></span>
+            </div>
+
+            <!-- HEADING -->
+            <h1 class="welcome-title">Welcome!</h1>
+            <p class="welcome-sub">Choose your role to get started</p>
+
+            <!-- ROLE BUTTONS -->
+            <div class="role-buttons">
+
+                <a href="signup.html?role=learner" class="role-btn learner-btn">
+                    <div class="role-btn-top">
+                        <span class="role-icon">🎓</span>
+                        <span class="role-badge">Free</span>
+                    </div>
+                    <p class="role-title">I'm a Learner</p>
+                    <p class="role-hint">Access lessons, quizzes & track your progress</p>
+                </a>
+
+                <a href="signup.html?role=teacher" class="role-btn teacher-btn">
+                    <div class="role-btn-top">
+                        <span class="role-icon">🏫</span>
+                        <span class="role-badge school-badge">For Schools</span>
+                    </div>
+                    <p class="role-title">I'm an Educator</p>
+                    <p class="role-hint">Manage content, share locally & monitor students</p>
+                </a>
+
+            </div>
+
+            <!-- BACK LINK -->
+            <!-- BACK LINK -->
+             <a href="index.html" class="welcome-back-btn">Home</a>
+
+        </section>
+
+    </main>
+
+    <script src="js/script.js" defer></script>
+
+</body>
+</html>

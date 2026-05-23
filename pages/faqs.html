@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs - Edumos</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+    <!-- TOP LEFT -->
+<div class="top-left-bar">
+    <div class="current-page" id="currentPage">Home</div>
+    <button class="theme-toggle-btn" id="themeBtn">🎨</button>
+</div>
+
+<!-- THEME PANEL -->
+<div class="theme-panel" id="themePanel">
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Mode</p>
+        <div class="theme-mode-row">
+            <button class="theme-mode-btn" id="lightBtn">☀️ Light</button>
+            <button class="theme-mode-btn" id="darkBtn">🌙 Dark</button>
+        </div>
+    </div>
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Gradient</p>
+        <div class="theme-gradient-row">
+            <button class="theme-grad-btn" data-grad="default" title="Default" style="background:linear-gradient(135deg,#ffffff,#4b5cff);"></button>
+            <button class="theme-grad-btn" data-grad="purple" title="Purple Dream" style="background:linear-gradient(135deg,#f3e7ff,#9b59b6);"></button>
+            <button class="theme-grad-btn" data-grad="ocean" title="Ocean" style="background:linear-gradient(135deg,#e0f7fa,#0077b6);"></button>
+            <button class="theme-grad-btn" data-grad="forest" title="Forest" style="background:linear-gradient(135deg,#e8f5e9,#2ecc71);"></button>
+            <button class="theme-grad-btn" data-grad="sunset" title="Sunset" style="background:linear-gradient(135deg,#fff3e0,#e74c3c);"></button>
+        </div>
+    </div>
+</div>
+
+<!-- TOP RIGHT -->
+<div class="top-right-bar">
+    <button class="search-icon-btn" id="searchBtn">🔍</button>
+    <div class="menu-icon" id="menuBtn">☰</div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar-wrap" id="searchBarWrap">
+    <div class="search-bar-top">
+        <input type="text" id="searchInput" class="search-bar-input" placeholder="Search pages, subjects..." />
+        <button class="search-bar-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results-drop" id="searchResults" style="display:none;"></div>
+</div>
+
+<!-- OVERLAY + SIDE MENU -->
+<div class="overlay" id="overlay"></div>
+<div class="side-menu" id="sideMenu">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="faqs.html" class="nav-link">FAQs</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+</div>
+
+    
+
+    <!-- HERO -->
+    <section class="page-hero">
+        <div class="page-hero-inner">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <h1 class="page-hero-title">Frequently Asked <span class="hero-brand">Questions</span></h1>
+            <p class="page-hero-sub">Find answers to the most common questions about Edumos.</p>
+
+            <!-- SEARCH -->
+            <div class="faq-search-wrap">
+                <input type="text" id="faqSearch" class="faq-search" placeholder="🔍  Search questions..." />
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- FAQ BODY -->
+    <section class="faq-section">
+
+        <!-- CATEGORY TABS -->
+        <div class="faq-categories" id="faqCategories">
+            <button class="faq-cat-btn active" data-cat="all">All</button>
+            <button class="faq-cat-btn" data-cat="general">General</button>
+            <button class="faq-cat-btn" data-cat="students">Students</button>
+            <button class="faq-cat-btn" data-cat="teachers">Teachers</button>
+            <button class="faq-cat-btn" data-cat="technical">Technical</button>
+            <button class="faq-cat-btn" data-cat="account">Account</button>
+        </div>
+
+        <!-- NO RESULTS -->
+        <div class="faq-no-results" id="faqNoResults" style="display:none;">
+            <p>😕 No questions found for "<span id="searchTerm"></span>"</p>
+        </div>
+
+        <!-- FAQ LIST -->
+        <div class="faq-list" id="faqList"></div>
+
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" style="padding: 0 40px 60px;">
+        <div class="cta-inner scroll-animate">
+            <h2 class="cta-title">Still have questions?</h2>
+            <p class="cta-sub">Our team is happy to help. Reach out to us directly.</p>
+            <a href="contact.html" class="get-started-btn">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <p class="footer-brand">Edumos</p>
+            <p class="footer-sub">College of Science and Technology, Phuentsholing | Phone: +975-17774484</p>
+            <p class="footer-copy">© 2026 Edumos. Built for better learning.</p>
+        </div>
+    </footer>
+
+    <button class="scroll-top-btn" id="scrollTopBtn">↑</button>
+    <script src="../js/script.js" defer></script>
+    <script>
+        const faqs = [
+            { cat: "general", q: "What is Edumos?", a: "Edumos is an offline-first learning platform designed for students and teachers in Bhutan. It allows learning to continue even without internet access by sharing content locally over Wi-Fi." },
+            { cat: "general", q: "Is Edumos free to use?", a: "Yes! Basic features of Edumos are completely free for all students and teachers across Bhutan." },
+            { cat: "general", q: "Which schools can use Edumos?", a: "Edumos supports all schools across all 20 Dzongkhags of Bhutan, from Class PP all the way to Class XII including all streams." },
+            { cat: "general", q: "What makes Edumos different from other platforms?", a: "Unlike most platforms, Edumos is built specifically for Bhutan's connectivity challenges. It works fully offline, supports local Wi-Fi sharing, and is structured around Bhutan's school curriculum." },
+            { cat: "students", q: "How do I sign up as a student?", a: "Click 'Get Started' on the homepage, choose 'I'm a Learner', fill in your details, then select your Dzongkhag, school, and class. You'll be taken straight to your dashboard." },
+            { cat: "students", q: "Why are my subjects locked?", a: "Subjects are locked until your teacher sets a PIN for that subject. Once your teacher shares the PIN with you, enter it on the subject card to unlock access." },
+            { cat: "students", q: "What if my teacher hasn't set a PIN yet?", a: "You'll see a message saying 'No PIN set yet'. Ask your teacher to set the PIN from their dashboard and share it with you." },
+            { cat: "students", q: "Will my progress be saved offline?", a: "Yes! Your quiz results and lesson progress are saved on your device when offline and automatically synced to the server once you're back online." },
+            { cat: "students", q: "Can I switch to a different class or school?", a: "Yes, contact your school administrator or use the profile settings to update your class and school information." },
+            { cat: "teachers", q: "How do I sign up as a teacher?", a: "Click 'Get Started', choose 'I'm an Educator', fill in your details and select your school. You'll reach your dashboard where you can add your subjects." },
+            { cat: "teachers", q: "How do I add a subject to my dashboard?", a: "Click '+ Add Subject' on your dashboard, select the class, stream (for Class XI and XII), and subject you teach. It will appear as a card on your dashboard." },
+            { cat: "teachers", q: "How do I set a PIN for a subject?", a: "Click 'Set PIN' on the subject card, enter a 4-digit PIN, and save it. Share this PIN with your students so they can unlock the subject on their dashboard." },
+            { cat: "teachers", q: "Can I change or reset a PIN?", a: "Yes! Click 'Change PIN' on any subject card to update it, or 'Reset PIN' to remove it entirely. Note that resetting will lock students out until a new PIN is set." },
+            { cat: "teachers", q: "Can I teach the same subject to multiple classes?", a: "Yes! Add the subject separately for each class. For example, you can have 'Mathematics — Class IX' and 'Mathematics — Class X' as separate cards, each with their own PIN." },
+            { cat: "technical", q: "Does Edumos work without internet?", a: "Yes! Once you've logged in and loaded your dashboard, Edumos works fully offline. Content, lessons, and quizzes are all accessible without a connection." },
+            { cat: "technical", q: "How does local sharing work?", a: "Teachers create a Wi-Fi hotspot and students connect to it. Content is shared directly between devices on the local network without needing internet." },
+            { cat: "technical", q: "What devices does Edumos support?", a: "Edumos works on any device with a modern web browser — phones, tablets, laptops, and desktop computers." },
+            { cat: "technical", q: "When does my progress sync?", a: "Progress syncs automatically whenever your device has an internet connection. You can also manually trigger a sync from your dashboard." },
+            { cat: "account", q: "I forgot my password. What do I do?", a: "Click 'Forgot Password?' on the login page, enter your email address, and we'll send you a reset link." },
+            { cat: "account", q: "Can I change my school or Dzongkhag after signing up?", a: "Yes, this can be updated from your profile settings once the full account management system is live." },
+            { cat: "account", q: "Is my personal data safe?", a: "Yes. We only collect the information necessary to provide the service. Your data is never sold to third parties." },
+        ];
+
+        const list        = document.getElementById("faqList");
+        const searchInput = document.getElementById("faqSearch");
+        const noResults   = document.getElementById("faqNoResults");
+        const searchTerm  = document.getElementById("searchTerm");
+        let activecat     = "all";
+
+        function renderFaqs(filter = "", cat = "all") {
+            list.innerHTML = "";
+            const filtered = faqs.filter(f => {
+                const matchCat  = cat === "all" || f.cat === cat;
+                const matchText = f.q.toLowerCase().includes(filter.toLowerCase()) ||
+                                  f.a.toLowerCase().includes(filter.toLowerCase());
+                return matchCat && matchText;
+            });
+
+            noResults.style.display = filtered.length === 0 ? "block" : "none";
+            searchTerm.textContent  = filter;
+
+            filtered.forEach((f, i) => {
+                const item = document.createElement("div");
+                item.classList.add("faq-item");
+
+                item.innerHTML = `
+                    <button class="faq-question" data-index="${i}">
+                        <span>${f.q}</span>
+                        <span class="faq-arrow">›</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>${f.a}</p>
+                    </div>
+                `;
+
+                item.querySelector(".faq-question").addEventListener("click", () => {
+                    const isOpen = item.classList.contains("faq-open");
+                    document.querySelectorAll(".faq-item").forEach(el => el.classList.remove("faq-open"));
+                    if (!isOpen) item.classList.add("faq-open");
+                });
+
+                list.appendChild(item);
+            });
+        }
+
+        // Category buttons
+        document.querySelectorAll(".faq-cat-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".faq-cat-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                activecat = btn.dataset.cat;
+                renderFaqs(searchInput.value, activecat);
+            });
+        });
+
+        // Search
+        searchInput.addEventListener("input", () => {
+            renderFaqs(searchInput.value, activecat);
+        });
+
+        renderFaqs();
+    </script>
+</body>
+</html>

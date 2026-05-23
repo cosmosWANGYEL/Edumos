@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Subject - Edumos</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+    <!-- TOP LEFT -->
+<div class="top-left-bar">
+    <div class="current-page" id="currentPage">Home</div>
+    <button class="theme-toggle-btn" id="themeBtn">🎨</button>
+</div>
+
+<!-- THEME PANEL -->
+<div class="theme-panel" id="themePanel">
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Mode</p>
+        <div class="theme-mode-row">
+            <button class="theme-mode-btn" id="lightBtn">☀️ Light</button>
+            <button class="theme-mode-btn" id="darkBtn">🌙 Dark</button>
+        </div>
+    </div>
+    <div class="theme-panel-section">
+        <p class="theme-panel-label">Gradient</p>
+        <div class="theme-gradient-row">
+            <button class="theme-grad-btn" data-grad="default" title="Default" style="background:linear-gradient(135deg,#ffffff,#4b5cff);"></button>
+            <button class="theme-grad-btn" data-grad="purple" title="Purple Dream" style="background:linear-gradient(135deg,#f3e7ff,#9b59b6);"></button>
+            <button class="theme-grad-btn" data-grad="ocean" title="Ocean" style="background:linear-gradient(135deg,#e0f7fa,#0077b6);"></button>
+            <button class="theme-grad-btn" data-grad="forest" title="Forest" style="background:linear-gradient(135deg,#e8f5e9,#2ecc71);"></button>
+            <button class="theme-grad-btn" data-grad="sunset" title="Sunset" style="background:linear-gradient(135deg,#fff3e0,#e74c3c);"></button>
+        </div>
+    </div>
+</div>
+
+<!-- TOP RIGHT -->
+<div class="top-right-bar">
+    <button class="search-icon-btn" id="searchBtn">🔍</button>
+    <div class="menu-icon" id="menuBtn">☰</div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-bar-wrap" id="searchBarWrap">
+    <div class="search-bar-top">
+        <input type="text" id="searchInput" class="search-bar-input" placeholder="Search pages, subjects..." />
+        <button class="search-bar-close" id="searchClose">✕</button>
+    </div>
+    <div class="search-results-drop" id="searchResults" style="display:none;"></div>
+</div>
+
+<!-- OVERLAY + SIDE MENU -->
+<div class="overlay" id="overlay"></div>
+<div class="side-menu" id="sideMenu">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../pages/about.html" class="nav-link">About</a>
+    <a href="../pages/faqs.html" class="nav-link">FAQs</a>
+    <a href="../pages/contact.html" class="nav-link">Contact</a>
+</div>
+
+    <div class="auth-container">
+        <div class="auth-card setup-card">
+
+            <div class="setup-step-indicator">
+                <div class="setup-step done">✓</div>
+                <div class="setup-step-line active-line"></div>
+                <div class="setup-step done">✓</div>
+                <div class="setup-step-line active-line"></div>
+                <div class="setup-step active">3</div>
+            </div>
+
+            <h2 class="auth-title">Select Subject</h2>
+            <p class="auth-role">Choose your subject and enter the PIN</p>
+
+            <div class="auth-form">
+
+                <!-- Grade -->
+                <div class="form-group">
+                    <label>Grade</label>
+                    <select id="gradeSelect" class="setup-select">
+                        <option value="">— Select Grade —</option>
+                    </select>
+                </div>
+
+                <!-- Stream (only for XI and XII) -->
+                <div class="form-group" id="streamGroup" style="display:none;">
+                    <label>Stream</label>
+                    <select id="streamSelect" class="setup-select">
+                        <option value="">— Select Stream —</option>
+                        <option value="Science">Science</option>
+                        <option value="Commerce">Commerce</option>
+                        <option value="Arts">Arts</option>
+                    </select>
+                </div>
+
+                <!-- Subject -->
+                <div class="form-group" id="subjectGroup" style="display:none;">
+                    <label>Subject</label>
+                    <select id="subjectSelect" class="setup-select">
+                        <option value="">— Select Subject —</option>
+                    </select>
+                </div>
+
+                <!-- PIN entry for students -->
+                <div id="pinSection" style="display:none;">
+                    <div class="form-group">
+                        <label>4-Digit PIN</label>
+                        <div class="pin-inputs">
+                            <input type="text" maxlength="1" class="pin-box" id="p1" />
+                            <input type="text" maxlength="1" class="pin-box" id="p2" />
+                            <input type="text" maxlength="1" class="pin-box" id="p3" />
+                            <input type="text" maxlength="1" class="pin-box" id="p4" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PIN creation for teachers -->
+                <div id="pinCreateSection" style="display:none;">
+                    <div class="form-group">
+                        <label>Create a 4-Digit PIN for students to join</label>
+                        <div class="pin-inputs">
+                            <input type="text" maxlength="1" class="pin-box" id="t1" />
+                            <input type="text" maxlength="1" class="pin-box" id="t2" />
+                            <input type="text" maxlength="1" class="pin-box" id="t3" />
+                            <input type="text" maxlength="1" class="pin-box" id="t4" />
+                        </div>
+                        <p class="pin-hint">Share this PIN with your students so they can access this subject.</p>
+                    </div>
+                </div>
+
+                <button class="auth-btn" id="enterBtn" style="display:none;">Enter</button>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js" defer></script>
+    <script>
+        const params    = new URLSearchParams(window.location.search);
+        const role      = params.get("role") || sessionStorage.getItem("userRole") || "learner";
+        const grades    = JSON.parse(sessionStorage.getItem("grades") || '["X"]');
+        const school    = sessionStorage.getItem("school") || "Your School";
+        const isTeacher = role === "teacher";
+
+        sessionStorage.setItem("userRole", role);
+
+        const subjectsByGrade = {
+            "PP":   ["Art Education", "Dzongkha", "English", "Health & Physical Education", "Mathematics", "Environmental Studies (EVS)"],
+            "I":    ["Art Education", "Dzongkha", "English", "Health & Physical Education", "Mathematics", "Environmental Studies (EVS)"],
+            "II":   ["Art Education", "Dzongkha", "English", "Health & Physical Education", "Mathematics", "Environmental Studies (EVS)"],
+            "III":  ["Art Education", "Dzongkha", "English", "Health & Physical Education", "Mathematics", "Environmental Studies (EVS)"],
+            "IV":   ["English", "Dzongkha", "Mathematics", "Social Studies", "Information & Communication Technology", "Health & Physical Education"],
+            "V":    ["English", "Dzongkha", "Mathematics", "Social Studies", "Information & Communication Technology", "Health & Physical Education"],
+            "VI":   ["English", "Dzongkha", "Mathematics", "Social Studies", "Information & Communication Technology", "Health & Physical Education"],
+            "VII":  ["English", "Dzongkha", "Science", "History & Civics", "Geography", "Information & Communication Technology", "Health & Physical Education"],
+            "VIII": ["English", "Dzongkha", "Science", "History & Civics", "Geography", "Information & Communication Technology", "Health & Physical Education"],
+            "IX":   ["English", "Dzongkha", "Mathematics", "Physics", "Chemistry", "Biology", "History", "Geography", "Economics", "Information & Communication Technology"],
+            "X":    ["English", "Dzongkha", "Mathematics", "Physics", "Chemistry", "Biology", "History", "Geography", "Economics", "Information & Communication Technology"],
+            "XI_Science":   ["Pure Mathematics", "Dzongkha", "English", "Biology", "Physics", "Chemistry", "Information & Communication Technology"],
+            "XI_Commerce":  ["Business Mathematics", "English", "Dzongkha", "Accountancy", "Economics", "Business & Entrepreneurship", "Information & Communication Technology"],
+            "XI_Arts":      ["English", "Dzongkha", "Business Mathematics", "Geography", "History", "Information & Communication Technology"],
+            "XII_Science":  ["Pure Mathematics", "Dzongkha", "English", "Biology", "Physics", "Chemistry", "Information & Communication Technology"],
+            "XII_Commerce": ["Business Mathematics", "English", "Dzongkha", "Accountancy", "Economics", "Business & Entrepreneurship", "Information & Communication Technology"],
+            "XII_Arts":     ["English", "Dzongkha", "Business Mathematics", "Geography", "History", "Information & Communication Technology"]
+        };
+
+        const gradeSelect   = document.getElementById("gradeSelect");
+        const streamGroup   = document.getElementById("streamGroup");
+        const streamSelect  = document.getElementById("streamSelect");
+        const subjectGroup  = document.getElementById("subjectGroup");
+        const subjectSelect = document.getElementById("subjectSelect");
+        const pinSection    = document.getElementById("pinSection");
+        const pinCreate     = document.getElementById("pinCreateSection");
+        const enterBtn      = document.getElementById("enterBtn");
+
+        // Populate grade dropdown from sessionStorage
+        grades.forEach(g => {
+            const opt = document.createElement("option");
+            opt.value = g;
+            opt.textContent = `Class ${g}`;
+            gradeSelect.appendChild(opt);
+        });
+
+        function resetBelow(level) {
+            if (level <= 1) {
+                streamGroup.style.display = "none";
+                streamSelect.value = "";
+            }
+            if (level <= 2) {
+                subjectGroup.style.display = "none";
+                subjectSelect.innerHTML = '<option value="">— Select Subject —</option>';
+            }
+            pinSection.style.display = "none";
+            pinCreate.style.display = "none";
+            enterBtn.style.display = "none";
+        }
+
+        function populateSubjects(key) {
+            subjectSelect.innerHTML = '<option value="">— Select Subject —</option>';
+            if (subjectsByGrade[key]) {
+                subjectsByGrade[key].forEach(s => {
+                    const opt = document.createElement("option");
+                    opt.textContent = s;
+                    subjectSelect.appendChild(opt);
+                });
+                subjectGroup.style.display = "block";
+            }
+        }
+
+        gradeSelect.addEventListener("change", () => {
+            const g = gradeSelect.value;
+            resetBelow(1);
+
+            if (!g) return;
+
+            if (g === "XI" || g === "XII") {
+                // Show stream selector first
+                streamGroup.style.display = "block";
+            } else {
+                populateSubjects(g);
+            }
+        });
+
+        streamSelect.addEventListener("change", () => {
+            const g      = gradeSelect.value;
+            const stream = streamSelect.value;
+            resetBelow(2);
+
+            if (!stream) return;
+
+            const key = `${g}_${stream}`;
+            populateSubjects(key);
+        });
+
+        subjectSelect.addEventListener("change", () => {
+            pinSection.style.display = "none";
+            pinCreate.style.display = "none";
+            enterBtn.style.display = "none";
+
+            if (!subjectSelect.value) return;
+
+            if (isTeacher) {
+                pinCreate.style.display = "block";
+            } else {
+                pinSection.style.display = "block";
+            }
+            enterBtn.style.display = "block";
+        });
+
+        // PIN box auto-advance
+        function setupPinBoxes(ids) {
+            ids.forEach((id, i) => {
+                const box = document.getElementById(id);
+                box.addEventListener("input", () => {
+                    box.value = box.value.replace(/\D/, "");
+                    if (box.value && i < ids.length - 1) {
+                        document.getElementById(ids[i + 1]).focus();
+                    }
+                });
+                box.addEventListener("keydown", e => {
+                    if (e.key === "Backspace" && !box.value && i > 0) {
+                        document.getElementById(ids[i - 1]).focus();
+                    }
+                });
+            });
+        }
+
+        setupPinBoxes(["p1","p2","p3","p4"]);
+        setupPinBoxes(["t1","t2","t3","t4"]);
+
+        enterBtn.addEventListener("click", () => {
+            const grade   = gradeSelect.value;
+            const stream  = streamSelect.value;
+            const subject = subjectSelect.value;
+
+            if (!grade || !subject) {
+                alert("Please complete all selections.");
+                return;
+            }
+
+            if ((grade === "XI" || grade === "XII") && !stream) {
+                alert("Please select a stream.");
+                return;
+            }
+
+            const gradeLabel = (grade === "XI" || grade === "XII") && stream
+                ? `${grade} ${stream}`
+                : grade;
+
+            if (isTeacher) {
+                const pin = ["t1","t2","t3","t4"].map(id => document.getElementById(id).value).join("");
+                if (pin.length < 4) {
+                    alert("Please create a 4-digit PIN.");
+                    return;
+                }
+                const pinKey = `pin_${school}_${gradeLabel}_${subject}`.replace(/\s/g, "_");
+                sessionStorage.setItem(pinKey, pin);
+                alert(`✅ PIN ${pin} created for ${subject} — Class ${gradeLabel}!\nShare this with your students.`);
+            } else {
+                const pin = ["p1","p2","p3","p4"].map(id => document.getElementById(id).value).join("");
+                if (pin.length < 4) {
+                    alert("Please enter the 4-digit PIN.");
+                    return;
+                }
+                const pinKey = `pin_${school}_${gradeLabel}_${subject}`.replace(/\s/g, "_");
+                const correctPin = sessionStorage.getItem(pinKey);
+                if (!correctPin) {
+                    alert("❌ No PIN set for this subject yet. Ask your teacher to set one first.");
+                    return;
+                }
+                if (pin !== correctPin) {
+                    alert("❌ Incorrect PIN. Please check with your teacher.");
+                    return;
+                }
+            }
+
+            sessionStorage.setItem("selectedGrade", gradeLabel);
+            sessionStorage.setItem("selectedSubject", subject);
+            sessionStorage.setItem("selectedStream", stream || "");
+
+            window.location.href = isTeacher
+                ? `../dashboards/teacher.html`
+                : `../dashboards/student.html`;
+        });
+    </script>
+</body>
+</html>
